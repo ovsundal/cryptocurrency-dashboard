@@ -1,10 +1,14 @@
 import React from 'react';
-import logo from '../logo.svg';
 import './App.css';
+import WelcomeMessage from "./WelcomeMessage";
+
+
 
 function App() {
   return (
-    <div>Hello World</div>
+      <div>
+        <WelcomeMessage />
+      </div>
   );
 }
 
