@@ -30,7 +30,7 @@ function ControlButton({name}) {
     return (
         <ControlButtonElem
             active={page === name}
-            onClick={() => setProvider({page: name})}
+            onClick={() => setProvider({...provider, page: name})}
         >
             {toProperCase(name)}
         </ControlButtonElem>
