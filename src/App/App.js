@@ -4,16 +4,14 @@ import WelcomeMessage from "../Settings/WelcomeMessage";
 import AppLayout from "./AppLayout";
 import AppBar from "./AppBar";
 import {AppProvider} from "./AppProvider";
-import ConfirmButton from "../Settings/ConfirmButton";
-
+import Settings from "../Settings/index"
 
 function App() {
     return (
         <AppLayout>
             <AppProvider>
                 <AppBar />
-                <WelcomeMessage />
-                <ConfirmButton></ConfirmButton>
+                <Settings />
             </AppProvider>
         </AppLayout>
     );
