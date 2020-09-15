@@ -9,7 +9,6 @@ const MAX_FAVORITES = 10;
 
 export const AppProvider = (props) => {
     const [provider, setProvider] = useState({page: 'settings', firstVisit: true, favorites: ['BTC', 'ETH', 'XMR', 'DOGE']});
-    const [settings, setSettings] = useState({});
 
 
     useEffect(() => {
@@ -56,7 +55,7 @@ export const AppProvider = (props) => {
     }
 
     return (
-        <AppContext.Provider value={{provider, setProvider, settings, setSettings, confirmFavorites, addCoin, removeCoin, isInFavorites}}>
+        <AppContext.Provider value={{provider, setProvider, confirmFavorites, addCoin, removeCoin, isInFavorites}}>
             {props.children}
         </AppContext.Provider>
     )
