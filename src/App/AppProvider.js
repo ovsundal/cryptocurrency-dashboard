@@ -8,7 +8,7 @@ const cc = require('cryptocompare');
 const MAX_FAVORITES = 10;
 
 export const AppProvider = (props) => {
-    const [provider, setProvider] = useState({page: 'settings', firstVisit: true, favorites: ['BTC', 'ETH', 'XMR', 'DOGE']});
+    const [provider, setProvider] = useState({page: 'settings', firstVisit: true, favorites: ['BTC', 'ETH', 'XMR', 'DOGE'], filteredCoins: []});
 
 
     useEffect(() => {
@@ -54,8 +54,12 @@ export const AppProvider = (props) => {
             }))
     }
 
+    const setFilteredCoins = filteredCoins => {
+        return setProvider({...provider, filteredCoins: filteredCoins})
+    }
+
     return (
-        <AppContext.Provider value={{provider, setProvider, confirmFavorites, addCoin, removeCoin, isInFavorites}}>
+        <AppContext.Provider value={{provider, setProvider, confirmFavorites, addCoin, removeCoin, isInFavorites, setFilteredCoins}}>
             {props.children}
         </AppContext.Provider>
     )
