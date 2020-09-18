@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, {useContext, useEffect} from "react";
 import styled from 'styled-components';
 import {backgroundColor2, fontSize2} from "../Shared/Styles";
 import {AppContext} from "../App/AppProvider";
@@ -41,6 +41,7 @@ const handleFilter = _.debounce((inputValue, coinList, setFilteredCoins) => {
 
 function filterCoins(e, setFilteredCoins, coinList) {
     let inputValue = e.target.value;
+
     if(!inputValue) {
         setFilteredCoins(null);
         return;
@@ -52,7 +53,11 @@ function filterCoins(e, setFilteredCoins, coinList) {
 export default function() {
     const {setFilteredCoins, provider} = useContext(AppContext);
     const {coinList} = provider;
-console.log(coinList);
+
+    // clear filter when user swaps pane
+    useEffect(() => {
+        setFilteredCoins(null);
+    }, [])
 
     return (
         <SearchGrid>

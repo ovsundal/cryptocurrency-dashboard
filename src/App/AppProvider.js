@@ -8,10 +8,11 @@ const cc = require('cryptocompare');
 const MAX_FAVORITES = 10;
 
 export const AppProvider = (props) => {
-    const [provider, setProvider] = useState({page: 'settings', firstVisit: true, favorites: ['BTC', 'ETH', 'XMR', 'DOGE'], filteredCoins: []});
+    const [provider, setProvider] = useState({page: 'settings', firstVisit: true, favorites: ['BTC', 'ETH', 'XMR', 'DOGE'], filteredCoins: null});
 
 
     useEffect(() => {
+
         const getCoinList = async () => {
             let coinList = (await cc.coinList()).Data;
             let cryptoDashData = JSON.parse(localStorage.getItem('cryptoDash'));
