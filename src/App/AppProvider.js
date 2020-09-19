@@ -8,7 +8,7 @@ const cc = require('cryptocompare');
 const MAX_FAVORITES = 10;
 
 export const AppProvider = (props) => {
-    const [provider, setProvider] = useState({page: 'settings', firstVisit: true, favorites: ['BTC', 'ETH', 'XMR', 'DOGE'], filteredCoins: null});
+    const [provider, setProvider] = useState({currentFavorite: "", page: 'settings', firstVisit: true, favorites: ['BTC', 'ETH', 'XMR', 'DOGE'], filteredCoins: null});
 
     useEffect(() => {
         const getCoinList = async () => {
@@ -16,11 +16,15 @@ export const AppProvider = (props) => {
             let cryptoDashData = JSON.parse(localStorage.getItem('cryptoDash'));
 
             if(cryptoDashData) {
+
+                const {favorites, currentFavorite} = cryptoDashData;
+
                 setProvider({
                     ...provider,
                     page: 'dashboard',
                     firstVisit: false,
-                    favorites: cryptoDashData.favorites,
+                    favorites,
+                    currentFavorite,
                     coinList,
                 })
             }
@@ -51,14 +55,19 @@ export const AppProvider = (props) => {
     const isInFavorites = key => _.includes(provider.favorites, key);
 
     const confirmFavorites = () => {
+
+        let currentFavorite = provider.favorites[0];
+
         setProvider({
             ...provider,
             firstVisit: false,
             page: 'dashboard',
+            currentFavorite
         })
         localStorage.setItem('cryptoDash', JSON.stringify(
             {
-                favorites: provider.favorites
+                favorites: provider.favorites,
+                currentFavorite
             }))
     }
 
@@ -66,8 +75,17 @@ export const AppProvider = (props) => {
         return setProvider({...provider, filteredCoins: filteredCoins})
     }
 
+    function setCurrentFavorite() {
+        setProvider({...provider, currentFavorite: this})
+
+        localStorage.setItem('cryptoDash', JSON.stringify({
+            ...JSON.parse(localStorage.getItem('cryptoDash')),
+            currentFavorite: this
+        }))
+    }
+
     return (
-        <AppContext.Provider value={{provider, setProvider, confirmFavorites, addCoin, removeCoin, isInFavorites, setFilteredCoins}}>
+        <AppContext.Provider value={{provider, setProvider, confirmFavorites, addCoin, removeCoin, isInFavorites, setFilteredCoins, setCurrentFavorite}}>
             {props.children}
         </AppContext.Provider>
     )
