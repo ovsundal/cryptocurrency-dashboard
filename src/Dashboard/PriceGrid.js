@@ -21,6 +21,11 @@ export default function() {
     useEffect(() => {
         const getPricingData = async() => {
             const priceData = [];
+
+            if(!provider.favorites) {
+                return;
+            }
+
             for (const fav of provider.favorites) {
                 try {
                     const coinPrice = await cc.priceFull(fav, 'USD');
