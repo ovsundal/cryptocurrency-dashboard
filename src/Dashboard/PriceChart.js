@@ -9,14 +9,19 @@ import HighchartsTheme from "./HighchartsTheme";
 Highcharts.setOptions(HighchartsTheme);
 
 export default function() {
-    // const {provider, addCoin, removeCoin, isInFavorites} = useContext(AppContext);
+    const {provider} = useContext(AppContext);
+    const {historicalData} = provider;
 
     return (
         <Tile>
-            <HighchartsReact
-                options={highchartsConfig()}
-                highcharts={Highcharts}
-            />
+            {historicalData ?
+                <HighchartsReact
+                    options={highchartsConfig(historicalData)}
+                    highcharts={Highcharts}
+                /> : <div>Loading Historical Data</div>
+
+
+            }
         </Tile>
     )
 }

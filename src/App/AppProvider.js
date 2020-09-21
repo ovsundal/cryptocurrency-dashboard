@@ -13,7 +13,8 @@ export const AppProvider = (props) => {
         page: 'settings',
         firstVisit: true,
         favorites: ['BTC', 'ETH', 'XMR', 'DOGE'],
-        filteredCoins: null
+        filteredCoins: null,
+        historicalData: []
     });
 
     useEffect(() => {
@@ -41,6 +42,9 @@ export const AppProvider = (props) => {
                 })
             }
         }
+
+
+
         getCoinList();
     }, []);
 
@@ -68,6 +72,8 @@ export const AppProvider = (props) => {
             ...provider,
             firstVisit: false,
             page: 'dashboard',
+            prices: null,
+            historicalData: null,
             currentFavorite
         })
         localStorage.setItem('cryptoDash', JSON.stringify(
@@ -82,12 +88,16 @@ export const AppProvider = (props) => {
     }
 
     function setCurrentFavorite() {
-        setProvider({...provider, currentFavorite: this})
+        setProvider({...provider, currentFavorite: this, historicalData: null})
 
         localStorage.setItem('cryptoDash', JSON.stringify({
             ...JSON.parse(localStorage.getItem('cryptoDash')),
             currentFavorite: this
         }))
+    }
+
+    const setHistoricalData = data => {
+        setProvider({...provider, historicalData: data})
     }
 
     return (
@@ -99,7 +109,8 @@ export const AppProvider = (props) => {
             removeCoin,
             isInFavorites,
             setFilteredCoins,
-            setCurrentFavorite
+            setCurrentFavorite,
+            setHistoricalData
         }}>
             {props.children}
         </AppContext.Provider>
