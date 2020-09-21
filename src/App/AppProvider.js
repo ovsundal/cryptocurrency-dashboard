@@ -14,7 +14,8 @@ export const AppProvider = (props) => {
         firstVisit: true,
         favorites: ['BTC', 'ETH', 'XMR', 'DOGE'],
         filteredCoins: null,
-        historicalData: []
+        historicalData: [],
+        timeInterval: 'months'
     });
 
     useEffect(() => {
@@ -100,6 +101,10 @@ export const AppProvider = (props) => {
         setProvider({...provider, historicalData: data})
     }
 
+    const setChartTimeInterval = (value) => {
+        setProvider({...provider, timeInterval: value})
+    }
+
     return (
         <AppContext.Provider value={{
             provider,
@@ -110,7 +115,8 @@ export const AppProvider = (props) => {
             isInFavorites,
             setFilteredCoins,
             setCurrentFavorite,
-            setHistoricalData
+            setHistoricalData,
+            setChartTimeInterval
         }}>
             {props.children}
         </AppContext.Provider>

@@ -18,7 +18,7 @@ export default function() {
 
     const [prices, setPrices] = useState([]);
     const {provider, setHistoricalData} = useContext(AppContext)
-    const {currentFavorite, favorites, firstVisit} = provider;
+    const {currentFavorite, favorites, firstVisit, timeInterval} = provider;
 
     // get pricing data
     useEffect(() => {
@@ -58,7 +58,7 @@ export default function() {
                         currentFavorite,
                         ['USD'],
                         moment()
-                            .subtract({months: units})
+                            .subtract({[timeInterval]: units})
                             .toDate()
                     )
                 )
@@ -68,7 +68,7 @@ export default function() {
                 {
                     name: currentFavorite,
                     data: promises.map((ticker, index) => [
-                        moment().subtract({months: TIME_UNITS - index}).valueOf(),
+                        moment().subtract({[timeInterval]: TIME_UNITS - index}).valueOf(),
                         ticker.USD
                     ])
                 }
@@ -79,7 +79,7 @@ export default function() {
 
         fetchHistorical();
 
-    }, [currentFavorite])
+    }, [currentFavorite, timeInterval])
 
     return (
         <PriceGrid>
